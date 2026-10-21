@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ==========================================================================
+     STAYEASE HOTEL MANAGEMENT SYSTEM
+     Page: admin.html (MongoDB Aggregation Analytics & Master Hotel Management)
+     Primary Owner: Adarsh Bimal (25070122016) - Frontend & UI/UX Lead
+     Co-owners: Ahasas Singh (Aggregation Pipelines & CRUD), Akul Agarwal (Logs/DevOps)
+     Course Unit Mapping: Unit 4 (MongoDB Aggregation & CRUD), Unit 5 (DevOps Showcase)
+     ========================================================================== -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayEase | Executive Administration & Aggregation Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-logo">
+        <span class="logo-icon">🏨</span>
+        <div class="brand-text">
+          <h1>StayEase</h1>
+          <p class="tagline">Hotel Management, Services & Billing</p>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="rooms.html" class="nav-link">Rooms</a></li>
+          <li><a href="booking.html" class="nav-link">Reserve</a></li>
+          <li><a href="checkin.html" class="nav-link">Check-In</a></li>
+          <li><a href="packages.html" class="nav-link">Packages</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="vouchers.html" class="nav-link">Vouchers</a></li>
+          <li><a href="billing.html" class="nav-link">Billing</a></li>
+          <li><a href="payment.html" class="nav-link">Payment</a></li>
+          <li><a href="admin.html" class="nav-link admin-pill active">Admin Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="page-header flex-between">
+      <div>
+        <h2>Hotel Operations & Aggregation Dashboard</h2>
+        <p>Real-time analytics powered by multi-stage MongoDB Aggregation Pipelines (<code>$match</code>, <code>$group</code>, <code>$facet</code>, <code>$project</code>).</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" id="btnRefreshAnalytics">🔄 Refresh Aggregations</button>
+      </div>
+    </section>
+
+    <!-- METRICS CARDS ROW (CSS Grid) -->
+    <section class="metrics-grid" aria-labelledby="metrics-title">
+      <h3 id="metrics-title" class="sr-only">Executive KPI Cards</h3>
+      
+      <article class="metric-card">
+        <div class="metric-icon">🏨</div>
+        <div class="metric-content">
+          <h4>Room Inventory</h4>
+          <p class="metric-value" id="kpiTotalRooms">100</p>
+          <p class="metric-sub">
+            <span class="text-success" id="kpiAvailRooms">42 Avail</span> &bull; 
+            <span class="text-info" id="kpiOccupiedRooms">38 Occ</span> &bull; 
+            <span class="text-warning" id="kpiCleaningRooms">12 Clean</span>
+          </p>
+        </div>
+      </article>
+
+      <article class="metric-card">
+        <div class="metric-icon">💰</div>
+        <div class="metric-content">
+          <h4>Today's Revenue</h4>
+          <p class="metric-value" id="kpiTodayRevenue">₹2,45,000</p>
+          <p class="metric-sub">This Month: <strong id="kpiMonthRevenue">₹28,40,000</strong></p>
+        </div>
+      </article>
+
+      <article class="metric-card">
+        <div class="metric-icon">📊</div>
+        <div class="metric-content">
+          <h4>Occupancy Rate</h4>
+          <p class="metric-value" id="kpiOccupancyRate">76%</p>
+          <p class="metric-sub">38 of 50 active rooms occupied</p>
+        </div>
+      </article>
+
+      <article class="metric-card">
+        <div class="metric-icon">🏷️</div>
+        <div class="metric-content">
+          <h4>Top Voucher</h4>
+          <p class="metric-value" id="kpiTopVoucher">STAY10</p>
+          <p class="metric-sub">48 Redemptions (₹48,000 saved)</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- MONGODB AGGREGATION DETAILED BREAKDOWNS -->
+    <div class="dashboard-grid-2">
+      <!-- REVENUE BREAKDOWN BY STREAM -->
+      <section class="card card-elevated">
+        <div class="card-header">
+          <h3>Revenue Streams (MongoDB Aggregation)</h3>
+        </div>
+        <div class="card-body">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Revenue Source</th>
+                <th>Aggregated Sum (₹)</th>
+                <th>Share</th>
+              </tr>
+            </thead>
+            <tbody id="aggRevenueStreamBody">
+              <tr>
+                <td><strong>Room Charges</strong></td>
+                <td>₹18,50,000</td>
+                <td>65.1%</td>
+              </tr>
+              <tr>
+                <td><strong>Food &amp; Breakfast</strong></td>
+                <td>₹3,80,000</td>
+                <td>13.4%</td>
+              </tr>
+              <tr>
+                <td><strong>Hotel Packages</strong></td>
+                <td>₹2,90,000</td>
+                <td>10.2%</td>
+              </tr>
+              <tr>
+                <td><strong>Additional Services</strong></td>
+                <td>₹3,20,000</td>
+                <td>11.3%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TOP SERVICES & ROOMS -->
+      <section class="card card-elevated">
+        <div class="card-header">
+          <h3>Top Ordered Services & Popular Rooms</h3>
+        </div>
+        <div class="card-body">
+          <h4>Most Demanded Services</h4>
+          <ol class="popular-list" id="popularServicesList">
+            <li><strong>Room Service:</strong> 142 orders (₹42,600)</li>
+            <li><strong>Laundry &amp; Pressing:</strong> 98 orders (₹14,700)</li>
+            <li><strong>Ayurvedic Wellness Spa:</strong> 45 bookings (₹90,000)</li>
+          </ol>
+
+          <h4 class="mt-3">Popular Room Categories</h4>
+          <p>1. <strong>Executive Club</strong> (42% bookings) &bull; 2. <strong>Deluxe Twin</strong> (35% bookings)</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- MASTER CRUD TABS (MongoDB CRUD Demonstration) -->
+    <section class="card card-elevated mt-4" aria-labelledby="crud-heading">
+      <div class="card-header flex-between">
+        <h3 id="crud-heading">Master Entity CRUD Operations (Unit 4)</h3>
+        <div class="tab-buttons">
+          <button class="btn btn-sm btn-primary active" id="tabRooms">Rooms CRUD</button>
+          <button class="btn btn-sm btn-outline" id="tabServices">Services CRUD</button>
+          <button class="btn btn-sm btn-outline" id="tabVouchers">Vouchers CRUD</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="data-table" id="masterCrudTable">
+            <thead>
+              <tr>
+                <th>Room #</th>
+                <th>Floor</th>
+                <th>Type</th>
+                <th>Capacity</th>
+                <th>Rate/Night</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="masterCrudBody">
+              <tr>
+                <td><strong>101</strong></td>
+                <td>1</td>
+                <td>Standard</td>
+                <td>2 Guests</td>
+                <td>₹3,000</td>
+                <td><span class="badge badge-success">AVAILABLE</span></td>
+                <td>
+                  <button class="btn btn-sm btn-outline">Edit</button>
+                  <button class="btn btn-sm btn-text-danger">Deactivate</button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>205</strong></td>
+                <td>2</td>
+                <td>Executive</td>
+                <td>3 Guests</td>
+                <td>₹6,000</td>
+                <td><span class="badge badge-primary">OCCUPIED</span></td>
+                <td>
+                  <button class="btn btn-sm btn-outline">Edit</button>
+                  <button class="btn btn-sm btn-text-danger">Deactivate</button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>302</strong></td>
+                <td>3</td>
+                <td>Deluxe</td>
+                <td>3 Guests</td>
+                <td>₹4,500</td>
+                <td><span class="badge badge-info">RESERVED</span></td>
+                <td>
+                  <button class="btn btn-sm btn-outline">Edit</button>
+                  <button class="btn btn-sm btn-text-danger">Deactivate</button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>401</strong></td>
+                <td>4</td>
+                <td>Suite</td>
+                <td>4 Guests</td>
+                <td>₹10,000</td>
+                <td><span class="badge badge-success">AVAILABLE</span></td>
+                <td>
+                  <button class="btn btn-sm btn-outline">Edit</button>
+                  <button class="btn btn-sm btn-text-danger">Deactivate</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE NODE.JS LOG VIEWER (Unit 3 File System `fs`) -->
+    <section class="card card-elevated mt-4" aria-labelledby="logs-heading">
+      <div class="card-header flex-between">
+        <h3 id="logs-heading">Node.js Server System Log (<code>/logs/hotel.log</code>)</h3>
+        <button class="btn btn-sm btn-outline" id="btnClearLogDisplay">Clear View</button>
+      </div>
+      <div class="card-body">
+        <pre class="log-terminal" id="systemLogTerminal">
+[2026-10-21 10:30:12] [SYSTEM] StayEase HTTP Server initialized on port 3000
+[2026-10-21 10:30:13] [DATABASE] Connected to MongoDB database: hotelDB
+[2026-10-21 11:00:22] [EVENT: guestRegistered] Guest Akmal Abbas (ID: Aadhar-9012) registered successfully
+[2026-10-21 11:01:05] [EVENT: bookingCreated] Booking SE-2026-00101 created for Room 205 (Executive)
+[2026-10-21 11:05:40] [EVENT: guestCheckedIn] Guest checked into Room 205. Room status -> OCCUPIED
+[2026-10-21 11:10:15] [EVENT: serviceAdded] Added Room Service x 3 (Locked rate: ₹300) to SE-2026-00101
+[2026-10-21 11:15:30] [EVENT: serviceAdded] Added Laundry x 4 (Locked rate: ₹150) to SE-2026-00101
+[2026-10-21 11:20:00] [EVENT: serviceAdded] Added Spa x 1 (Locked rate: ₹2000) to SE-2026-00101
+[2026-10-21 11:35:10] [EVENT: voucherApplied] Voucher STAY10 validated and applied. Discount: ₹3,990
+        </pre>
+      </div>
+    </section>
+
+    <!-- DEVOPS & CI/CD SHOWCASE (Unit 5 Jenkins & Tomcat) -->
+    <section class="card card-elevated mt-4 mb-4" aria-labelledby="devops-heading">
+      <div class="card-header">
+        <h3 id="devops-heading">DevOps &amp; Infrastructure Showcase (Unit 5)</h3>
+      </div>
+      <div class="card-body">
+        <div class="grid-2-col">
+          <div class="devops-box">
+            <h4>Jenkins Continuous Integration</h4>
+            <p><strong>Pipeline:</strong> Declarative <code>Jenkinsfile</code></p>
+            <p><strong>Stages:</strong> Git Checkout &rarr; Dependency Install &rarr; Syntax/Lint Check &rarr; Automated Unit &amp; Integration Tests &rarr; Build Report.</p>
+            <span class="badge badge-success">JENKINS CI PASSED</span>
+          </div>
+
+          <div class="devops-box">
+            <h4>Apache Tomcat Demonstration Component</h4>
+            <p><strong>Technology:</strong> Java Servlet (<code>StayEaseServlet.java</code>)</p>
+            <p><strong>Deployment:</strong> Standard <code>WEB-INF/web.xml</code> deployment descriptor packaged as demo WAR.</p>
+            <span class="badge badge-info">TOMCAT SERLET VERIFIED</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 StayEase Hotel Management System. Built for Mini-Project Demonstration (Units 1–5).</p>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/dom.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

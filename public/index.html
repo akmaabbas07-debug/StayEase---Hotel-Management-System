@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ==========================================================================
+     STAYEASE HOTEL MANAGEMENT SYSTEM
+     Page: index.html (Home & Guest Lifecycle Hub)
+     Primary Owner: Adarsh Bimal (25070122016) - Frontend & UI/UX Lead
+     Co-owners: Akmal Abbas (Backend Integration), Ahasas Singh (Database), Akul Agarwal (DevOps)
+     Course Unit Mapping: Unit 1 (HTML5 Semantic Architecture & Forms)
+     ========================================================================== -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="StayEase - Integrated Hotel Management, Check-in, Services & Dynamic Billing System">
+  <title>StayEase | Luxury Hotel Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- SEMANTIC HEADER & ACCESSIBLE NAVIGATION -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-logo">
+        <span class="logo-icon">🏨</span>
+        <div class="brand-text">
+          <h1>StayEase</h1>
+          <p class="tagline">Hotel Management, Services & Billing</p>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="rooms.html" class="nav-link">Rooms</a></li>
+          <li><a href="booking.html" class="nav-link">Reserve</a></li>
+          <li><a href="checkin.html" class="nav-link">Check-In</a></li>
+          <li><a href="packages.html" class="nav-link">Packages</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="vouchers.html" class="nav-link">Vouchers</a></li>
+          <li><a href="billing.html" class="nav-link">Billing</a></li>
+          <li><a href="payment.html" class="nav-link">Payment</a></li>
+          <li><a href="admin.html" class="nav-link admin-pill">Admin Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="main-content">
+    <!-- HERO SECTION -->
+    <section class="hero-banner" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <span class="badge badge-gold">University Mini-Project (Units 1–5)</span>
+        <h2 id="hero-title">Seamless Hospitality, Dynamic Billing & Guest Management</h2>
+        <p class="hero-subtext">
+          An interconnected hotel operations platform handling the entire guest journey:
+          <strong>Registration → Room Search → Booking → Check-In → Packages → Services → Upgrade → Voucher → Dynamic Bill → Payment → Checkout → Room Cleaning.</strong>
+        </p>
+        <div class="hero-actions">
+          <a href="booking.html" class="btn btn-primary">Start Guest Journey</a>
+          <a href="rooms.html" class="btn btn-secondary">Search Room Availability</a>
+          <a href="admin.html" class="btn btn-outline">View Hotel Analytics</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE WORKFLOW PIPELINE -->
+    <section class="workflow-section" aria-labelledby="workflow-title">
+      <h3 id="workflow-title" class="section-title">The Complete Connected Guest Lifecycle</h3>
+      <p class="section-subtitle">Every module directly influences pricing, availability, and audit state.</p>
+      
+      <div class="workflow-grid">
+        <article class="workflow-card">
+          <div class="step-num">01</div>
+          <h4>Guest Registration</h4>
+          <p>Register guest with contact validation and identity document proof upload.</p>
+          <a href="booking.html" class="card-link">Register Guest &rarr;</a>
+        </article>
+
+        <article class="workflow-card">
+          <div class="step-num">02</div>
+          <h4>Room Availability</h4>
+          <p>Real-time date overlap query ensuring zero double-booking and cleaning tracking.</p>
+          <a href="rooms.html" class="card-link">Browse Rooms &rarr;</a>
+        </article>
+
+        <article class="workflow-card">
+          <div class="step-num">03</div>
+          <h4>Check-In & Upgrades</h4>
+          <p>Seamless check-in moves room to OCCUPIED. Mid-stay upgrade recalculates charges.</p>
+          <a href="checkin.html" class="card-link">Check-In Desk &rarr;</a>
+        </article>
+
+        <article class="workflow-card">
+          <div class="step-num">04</div>
+          <h4>Packages & Services</h4>
+          <p>Add dining, spa, or business packages. Historical purchase pricing locked.</p>
+          <a href="services.html" class="card-link">Add Services &rarr;</a>
+        </article>
+
+        <article class="workflow-card">
+          <div class="step-num">05</div>
+          <h4>Dynamic Billing & Coupons</h4>
+          <p>Dynamic recalculation: Rooms + Breakfast + Packages + Services - Vouchers + GST.</p>
+          <a href="billing.html" class="card-link">View Invoice &rarr;</a>
+        </article>
+
+        <article class="workflow-card">
+          <div class="step-num">06</div>
+          <h4>Checkout & Auto-Cleaning</h4>
+          <p>Simulate UPI payment. Room enters CLEANING for 2 hours before returning to AVAILABLE.</p>
+          <a href="payment.html" class="card-link">Settle Bill &rarr;</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- TEAM ALLOCATION SPOTLIGHT (Academic Demonstration) -->
+    <section class="team-spotlight" aria-labelledby="team-title">
+      <h3 id="team-title" class="section-title">Academic Domain Allocation (Units 1–5)</h3>
+      <div class="team-grid">
+        <div class="team-card">
+          <span class="role-badge">Backend & Integration</span>
+          <h4>Akmal Abbas</h4>
+          <p class="roll-no">Roll No: 25070122028</p>
+          <p class="desc">Node.js Express backend, availability overlap algorithm, check-in/out state machine, EventEmitter.</p>
+        </div>
+        <div class="team-card">
+          <span class="role-badge">Frontend & UI/UX</span>
+          <h4>Adarsh Bimal</h4>
+          <p class="roll-no">Roll No: 25070122016</p>
+          <p class="desc">Semantic HTML5 architecture, CSS3 Flexbox/Grid responsive system, DOM manipulation engine.</p>
+        </div>
+        <div class="team-card">
+          <span class="role-badge">Database & Commercial</span>
+          <h4>Ahasas Singh</h4>
+          <p class="roll-no">Roll No: 25070122026</p>
+          <p class="desc">MongoDB data modeling (1:1, 1:N, N:M), aggregation pipelines, indexes, dynamic billing & voucher engine.</p>
+        </div>
+        <div class="team-card">
+          <span class="role-badge">DevOps & Security</span>
+          <h4>Akul Agarwal</h4>
+          <p class="roll-no">Roll No: 25070122030</p>
+          <p class="desc">Git workflow, Jenkins CI pipeline, Tomcat demonstration servlet, security validation, logger, Nodemailer.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ACCESSIBLE FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 StayEase Hotel Management System. Built for Mini-Project Demonstration (Units 1–5).</p>
+      <p class="footer-links">
+        <a href="admin.html">Admin Portal</a> | 
+        <a href="billing.html">Billing Terminal</a> | 
+        <a href="rooms.html">Live Rooms</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

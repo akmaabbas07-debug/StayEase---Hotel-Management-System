@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ==========================================================================
+     STAYEASE HOTEL MANAGEMENT SYSTEM
+     Page: checkin.html (Receptionist Check-In & Guest Arrival Terminal)
+     Primary Owner: Adarsh Bimal (25070122016) - Frontend & UI/UX Lead
+     Co-owners: Akmal Abbas (Check-in State Machine & Events), Akul Agarwal (Logs)
+     Course Unit Mapping: Unit 1 (HTML5 Structure), Unit 3 (DOM Updates & Events)
+     ========================================================================== -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayEase | Reception Check-In Terminal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-logo">
+        <span class="logo-icon">🏨</span>
+        <div class="brand-text">
+          <h1>StayEase</h1>
+          <p class="tagline">Hotel Management, Services & Billing</p>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="rooms.html" class="nav-link">Rooms</a></li>
+          <li><a href="booking.html" class="nav-link">Reserve</a></li>
+          <li><a href="checkin.html" class="nav-link active">Check-In</a></li>
+          <li><a href="packages.html" class="nav-link">Packages</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="vouchers.html" class="nav-link">Vouchers</a></li>
+          <li><a href="billing.html" class="nav-link">Billing</a></li>
+          <li><a href="payment.html" class="nav-link">Payment</a></li>
+          <li><a href="admin.html" class="nav-link admin-pill">Admin Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="page-header">
+      <h2>Reception Check-In Terminal</h2>
+      <p>Confirm guest arrivals, review reserved packages, and transition room status from <strong>RESERVED</strong> to <strong>OCCUPIED</strong>.</p>
+    </section>
+
+    <!-- SEARCH RESERVATION PANEL -->
+    <section class="search-panel">
+      <form id="checkinSearchForm" class="filter-form">
+        <div class="form-group flex-2">
+          <label for="searchBookingQuery">Search Reservation (Booking Number / Guest Name / Phone)</label>
+          <input type="text" id="searchBookingQuery" class="form-control" 
+                 placeholder="e.g. SE-2026-00101 or Akmal Abbas" value="SE-2026-00101">
+        </div>
+        <div class="form-group flex-1 form-actions">
+          <button type="submit" class="btn btn-primary" id="btnLookupBooking">Find Reservation</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ACTIVE RESERVATION DETAILS CONTAINER -->
+    <section id="reservationDetailsSection" class="details-section" aria-labelledby="res-title">
+      <div class="card card-elevated">
+        <div class="card-header flex-between">
+          <div>
+            <h3 id="res-title">Reservation Details: <span id="displayBookingId" class="text-accent">SE-2026-00101</span></h3>
+            <p class="text-muted">Primary Guest: <strong id="displayGuestName">Akmal Abbas</strong> (<span id="displayPhone">+91 9876543210</span>)</p>
+          </div>
+          <div>
+            <span id="displayBookingStatus" class="badge badge-info">RESERVED</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="summary-columns-3">
+            <div class="summary-box">
+              <h4>Stay Parameters</h4>
+              <p><strong>Room Assigned:</strong> <span id="displayRoomNumber">Room 205 (Executive)</span></p>
+              <p><strong>Check-In Date:</strong> <span id="displayCheckIn">21 Oct 2026</span></p>
+              <p><strong>Check-Out Date:</strong> <span id="displayCheckOut">24 Oct 2026 (3 nights)</span></p>
+              <p><strong>Occupants:</strong> <span id="displayGuests">2 Guests</span></p>
+            </div>
+
+            <div class="summary-box">
+              <h4>Meals & Packages</h4>
+              <p><strong>Breakfast Option:</strong> <span id="displayBreakfast">Buffet (₹650/day/guest)</span></p>
+              <p><strong>Package:</strong> <span id="displayPackage">Business Package (₹2,500)</span></p>
+              <p><strong>Included Benefits:</strong> Airport Transfer, Wi-Fi, 2 Laundry Items</p>
+            </div>
+
+            <div class="summary-box">
+              <h4>Financial Status</h4>
+              <p><strong>Estimated Subtotal:</strong> <span id="displaySubtotal">₹24,400</span></p>
+              <p><strong>Estimated GST:</strong> <span id="displayTax">₹4,392</span></p>
+              <p><strong>Estimated Total:</strong> <strong id="displayTotal">₹28,792</strong></p>
+              <p><strong>Payment Status:</strong> <span id="displayPaymentStatus" class="badge badge-warning">PENDING</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer flex-between">
+          <div class="action-hints">
+            <span class="icon-info">ℹ️</span> Executing check-in locks the room inventory as OCCUPIED and emits a <code>guestCheckedIn</code> event.
+          </div>
+          <div class="action-buttons">
+            <button type="button" class="btn btn-success btn-lg" id="btnConfirmCheckin">
+              Confirm Guest Check-In
+            </button>
+            <a href="services.html?bookingId=SE-2026-00101" class="btn btn-secondary">Add Services</a>
+            <a href="billing.html?bookingId=SE-2026-00101" class="btn btn-outline">Go to Billing</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 StayEase Hotel Management System. Built for Mini-Project Demonstration (Units 1–5).</p>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/dom.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

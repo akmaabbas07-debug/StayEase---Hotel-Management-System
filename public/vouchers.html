@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ==========================================================================
+     STAYEASE HOTEL MANAGEMENT SYSTEM
+     Page: vouchers.html (Promotional Voucher Directory & Validator)
+     Primary Owner: Adarsh Bimal (25070122016) - Frontend & UI/UX Lead
+     Co-owners: Ahasas Singh (7-Step Voucher Engine), Akul Agarwal (Validation)
+     Course Unit Mapping: Unit 1 (HTML5 Semantic Layout), Unit 4 (Voucher Models)
+     ========================================================================== -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayEase | Promotional Vouchers & Coupons</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-logo">
+        <span class="logo-icon">🏨</span>
+        <div class="brand-text">
+          <h1>StayEase</h1>
+          <p class="tagline">Hotel Management, Services & Billing</p>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="rooms.html" class="nav-link">Rooms</a></li>
+          <li><a href="booking.html" class="nav-link">Reserve</a></li>
+          <li><a href="checkin.html" class="nav-link">Check-In</a></li>
+          <li><a href="packages.html" class="nav-link">Packages</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="vouchers.html" class="nav-link active">Vouchers</a></li>
+          <li><a href="billing.html" class="nav-link">Billing</a></li>
+          <li><a href="payment.html" class="nav-link">Payment</a></li>
+          <li><a href="admin.html" class="nav-link admin-pill">Admin Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="page-header">
+      <h2>Voucher & Promotional Coupon System</h2>
+      <p>Demonstrates a 7-step server-side coupon validation engine: date validity, global limits, user limits, minimum bill, and room restrictions.</p>
+    </section>
+
+    <!-- INTERACTIVE VOUCHER APPLICATION TEST HARNESS -->
+    <section class="search-panel">
+      <h3 class="section-title">Apply Voucher to Active Stay</h3>
+      <form id="voucherApplyForm" class="filter-form">
+        <div class="form-group flex-2">
+          <label for="voucherBookingSelect">Active Booking ID:</label>
+          <select id="voucherBookingSelect" class="form-control">
+            <option value="SE-2026-00101" selected>SE-2026-00101 — Akmal Abbas (Current Subtotal: ₹39,900)</option>
+          </select>
+        </div>
+
+        <div class="form-group flex-2">
+          <label for="voucherCodeInput">Enter Promo Code:</label>
+          <input type="text" id="voucherCodeInput" class="form-control" 
+                 placeholder="e.g. STAY10 or WELCOME500" value="WELCOME500">
+        </div>
+
+        <div class="form-group flex-1 form-actions">
+          <button type="submit" class="btn btn-primary" id="btnApplyVoucher">Apply Voucher</button>
+          <button type="button" class="btn btn-outline" id="btnRemoveVoucher">Remove</button>
+        </div>
+      </form>
+      <div id="voucherFeedbackBox" class="alert-box mt-3" style="display: none;"></div>
+    </section>
+
+    <!-- AVAILABLE VOUCHERS DIRECTORY -->
+    <section class="section-container" aria-labelledby="vouchers-dir-title">
+      <h3 id="vouchers-dir-title" class="section-title">Active & Test Promotional Codes</h3>
+      <div class="card-grid-3">
+        
+        <!-- STAY10 -->
+        <article class="voucher-card">
+          <div class="voucher-card-badge">Percentage</div>
+          <div class="voucher-card-header">
+            <h4>STAY10</h4>
+            <p class="discount-display">10% OFF</p>
+          </div>
+          <div class="voucher-card-body">
+            <p class="voucher-rule"><strong>Min Bill:</strong> ₹10,000</p>
+            <p class="voucher-rule"><strong>Max Cap:</strong> Up to ₹4,000</p>
+            <p class="voucher-rule"><strong>Per User:</strong> 1 redemption</p>
+            <p class="voucher-rule"><strong>Applies to:</strong> All Room Categories</p>
+          </div>
+          <div class="voucher-card-footer">
+            <button class="btn btn-sm btn-outline btn-block" onclick="copyAndApplyVoucher('STAY10')">
+              Use Code STAY10
+            </button>
+          </div>
+        </article>
+
+        <!-- WELCOME500 -->
+        <article class="voucher-card">
+          <div class="voucher-card-badge badge-gold">Flat Discount</div>
+          <div class="voucher-card-header">
+            <h4>WELCOME500</h4>
+            <p class="discount-display">₹500 OFF</p>
+          </div>
+          <div class="voucher-card-body">
+            <p class="voucher-rule"><strong>Min Bill:</strong> ₹5,000</p>
+            <p class="voucher-rule"><strong>Max Cap:</strong> Fixed ₹500</p>
+            <p class="voucher-rule"><strong>Per User:</strong> 1 redemption</p>
+            <p class="voucher-rule"><strong>Applies to:</strong> First-time Bookings</p>
+          </div>
+          <div class="voucher-card-footer">
+            <button class="btn btn-sm btn-outline btn-block" onclick="copyAndApplyVoucher('WELCOME500')">
+              Use Code WELCOME500
+            </button>
+          </div>
+        </article>
+
+        <!-- EXECUTIVE20 -->
+        <article class="voucher-card">
+          <div class="voucher-card-badge">Restricted</div>
+          <div class="voucher-card-header">
+            <h4>EXECUTIVE20</h4>
+            <p class="discount-display">20% OFF</p>
+          </div>
+          <div class="voucher-card-body">
+            <p class="voucher-rule"><strong>Min Bill:</strong> ₹15,000</p>
+            <p class="voucher-rule"><strong>Max Cap:</strong> Up to ₹5,000</p>
+            <p class="voucher-rule"><strong>Restrictions:</strong> Executive & Suite Only</p>
+            <p class="voucher-rule"><strong>Status:</strong> Active</p>
+          </div>
+          <div class="voucher-card-footer">
+            <button class="btn btn-sm btn-outline btn-block" onclick="copyAndApplyVoucher('EXECUTIVE20')">
+              Use Code EXECUTIVE20
+            </button>
+          </div>
+        </article>
+
+        <!-- TEST VOUCHER: EXPIRED -->
+        <article class="voucher-card card-dimmed">
+          <div class="voucher-card-badge badge-danger">Expired</div>
+          <div class="voucher-card-header">
+            <h4>EXPIRED50</h4>
+            <p class="discount-display">50% OFF</p>
+          </div>
+          <div class="voucher-card-body">
+            <p class="voucher-rule"><strong>Valid Until:</strong> 2025-01-01 (Past)</p>
+            <p class="voucher-rule"><strong>Demonstration:</strong> Tests Rule 3 rejection.</p>
+          </div>
+          <div class="voucher-card-footer">
+            <button class="btn btn-sm btn-outline btn-block" onclick="copyAndApplyVoucher('EXPIRED50')">
+              Test Expiry Guard
+            </button>
+          </div>
+        </article>
+
+        <!-- TEST VOUCHER: OVER LIMIT -->
+        <article class="voucher-card card-dimmed">
+          <div class="voucher-card-badge badge-danger">Exhausted</div>
+          <div class="voucher-card-header">
+            <h4>LIMITOVER</h4>
+            <p class="discount-display">₹1,000 OFF</p>
+          </div>
+          <div class="voucher-card-body">
+            <p class="voucher-rule"><strong>Usage Limit:</strong> 100 / 100 used</p>
+            <p class="voucher-rule"><strong>Demonstration:</strong> Tests Rule 4 rejection.</p>
+          </div>
+          <div class="voucher-card-footer">
+            <button class="btn btn-sm btn-outline btn-block" onclick="copyAndApplyVoucher('LIMITOVER')">
+              Test Limit Guard
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 StayEase Hotel Management System. Built for Mini-Project Demonstration (Units 1–5).</p>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/dom.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

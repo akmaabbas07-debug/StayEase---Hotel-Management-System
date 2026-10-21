@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ==========================================================================
+     STAYEASE HOTEL MANAGEMENT SYSTEM
+     Page: billing.html (Dynamic Billing & Room Upgrade Terminal)
+     Primary Owner: Adarsh Bimal (25070122016) - Frontend & UI/UX Lead
+     Co-owners: Ahasas Singh (Billing Calculation Engine), Akmal Abbas (Room Upgrade)
+     Course Unit Mapping: Unit 1 (HTML5 Table Layout), Unit 3 (Dynamic DOM Calculation)
+     ========================================================================== -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayEase | Dynamic Billing & Folio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-logo">
+        <span class="logo-icon">🏨</span>
+        <div class="brand-text">
+          <h1>StayEase</h1>
+          <p class="tagline">Hotel Management, Services & Billing</p>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="rooms.html" class="nav-link">Rooms</a></li>
+          <li><a href="booking.html" class="nav-link">Reserve</a></li>
+          <li><a href="checkin.html" class="nav-link">Check-In</a></li>
+          <li><a href="packages.html" class="nav-link">Packages</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="vouchers.html" class="nav-link">Vouchers</a></li>
+          <li><a href="billing.html" class="nav-link active">Billing</a></li>
+          <li><a href="payment.html" class="nav-link">Payment</a></li>
+          <li><a href="admin.html" class="nav-link admin-pill">Admin Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="page-header flex-between">
+      <div>
+        <h2>Dynamic Guest Folio & Bill Breakdown</h2>
+        <p>Real-time calculation derived from actual booking parameters. Never hard-coded.</p>
+      </div>
+      <div>
+        <span id="folioStatusBadge" class="badge badge-warning">PAYMENT PENDING</span>
+      </div>
+    </section>
+
+    <!-- INVOICE BREAKDOWN CONTAINER (PROFESSIONAL HOTEL INVOICE) -->
+    <div class="invoice-container">
+      <div class="invoice-paper" id="invoiceSheet">
+        
+        <!-- INVOICE HEADER -->
+        <header class="invoice-header">
+          <div class="hotel-info">
+            <h3 class="hotel-title">STAYEASE HOTEL &amp; SUITES</h3>
+            <p>Plot 42, Knowledge City, Bangalore, Karnataka, India</p>
+            <p>GSTIN: 29AAAAA0000A1Z5 | Phone: +91 80 4912 3456</p>
+          </div>
+          <div class="invoice-meta">
+            <h4>TAX INVOICE</h4>
+            <p><strong>Invoice No:</strong> <span id="invNumber">INV-2026-00101</span></p>
+            <p><strong>Date:</strong> <span id="invDate">21 Oct 2026</span></p>
+            <p><strong>Booking Ref:</strong> <span id="invBookingRef">SE-2026-00101</span></p>
+          </div>
+        </header>
+
+        <hr class="invoice-divider">
+
+        <!-- GUEST & STAY METADATA -->
+        <section class="invoice-guest-details">
+          <div class="grid-2-col">
+            <div>
+              <p><strong>Billed To:</strong> <span id="invGuestName">Akmal Abbas</span></p>
+              <p><strong>Contact:</strong> <span id="invGuestContact">+91 9876543210 | akmal@example.com</span></p>
+              <p><strong>ID Proof:</strong> <span id="invGuestId">Aadhar (XXXX-XXXX-9012)</span></p>
+            </div>
+            <div>
+              <p><strong>Room Assigned:</strong> <span id="invRoom">Room 205 (Executive Club)</span></p>
+              <p><strong>Stay Duration:</strong> <span id="invStayDates">21 Oct 2026 → 24 Oct 2026 (3 Nights)</span></p>
+              <p><strong>Total Guests:</strong> <span id="invGuestCount">2 Adults</span></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ITEMIZED CHARGES TABLE -->
+        <section class="invoice-items-section">
+          <table class="data-table invoice-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Calculation Detail</th>
+                <th class="text-right">Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="invoiceLineItems">
+              <!-- Room charges -->
+              <tr>
+                <td><strong>Room Charges</strong></td>
+                <td><span id="invRoomDetail">3 nights × ₹6,000 / night (Executive)</span></td>
+                <td class="text-right" id="invRoomTotal">18,000.00</td>
+              </tr>
+              <!-- Breakfast -->
+              <tr>
+                <td><strong>Breakfast Plan</strong></td>
+                <td><span id="invBreakfastDetail">Buffet Breakfast (2 guests × 3 days × ₹650)</span></td>
+                <td class="text-right" id="invBreakfastTotal">3,900.00</td>
+              </tr>
+              <!-- Package -->
+              <tr>
+                <td><strong>Hotel Package</strong></td>
+                <td><span id="invPackageDetail">Business Package (Wi-Fi, Airport Transfer, 2 Laundry)</span></td>
+                <td class="text-right" id="invPackageTotal">2,500.00</td>
+              </tr>
+              <!-- Additional services -->
+              <tr>
+                <td><strong>Additional Services</strong></td>
+                <td>
+                  <ul class="mini-service-list" id="invServicesList">
+                    <li>Room Service (3 × ₹300) = ₹900.00</li>
+                    <li>Laundry (4 items × ₹150) = ₹600.00</li>
+                    <li>Ayurvedic Spa (1 session × ₹2,000) = ₹2,000.00</li>
+                  </ul>
+                </td>
+                <td class="text-right" id="invServicesTotal">3,500.00</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" class="text-right"><strong>Subtotal:</strong></td>
+                <td class="text-right"><strong id="invSubtotal">₹27,900.00</strong></td>
+              </tr>
+              <tr class="voucher-discount-row" id="invVoucherRow">
+                <td colspan="2" class="text-right">
+                  <strong>Promotional Voucher (<span id="invVoucherCode">WELCOME500</span>):</strong>
+                </td>
+                <td class="text-right text-success"><strong id="invDiscount">-₹500.00</strong></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-right"><strong>GST @ 18%:</strong></td>
+                <td class="text-right" id="invTax">₹4,932.00</td>
+              </tr>
+              <tr class="grand-total-row">
+                <td colspan="2" class="text-right"><h3>Grand Total:</h3></td>
+                <td class="text-right"><h3 id="invGrandTotal">₹32,332.00</h3></td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+
+        <!-- INVOICE FOOTER ACTIONS -->
+        <footer class="invoice-actions-footer">
+          <div class="voucher-quick-bar">
+            <input type="text" id="billVoucherInput" placeholder="Enter coupon (e.g. STAY10)" value="STAY10" class="input-sm">
+            <button class="btn btn-sm btn-outline" id="btnBillApplyVoucher">Apply Voucher</button>
+            <button class="btn btn-sm btn-text-danger" id="btnBillRemoveVoucher">Remove Voucher</button>
+          </div>
+
+          <div class="billing-buttons">
+            <button type="button" class="btn btn-secondary" id="btnOpenUpgradeModal">
+              ⭐ Upgrade Room
+            </button>
+            <a href="payment.html?bookingId=SE-2026-00101" class="btn btn-primary btn-lg">
+              Proceed to Payment &rarr;
+            </a>
+            <button type="button" class="btn btn-outline" id="btnDownloadReceipt">
+              📄 Download Receipt (fs)
+            </button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ROOM UPGRADE MODAL (SECTION 8 DEMO) -->
+    <div id="upgradeModal" class="modal-backdrop" style="display: none;">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3>Mid-Stay Room Upgrade</h3>
+          <button class="close-btn" id="btnCloseUpgradeModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Current Room: <strong>Room 205 (Executive @ ₹6,000/night)</strong></p>
+          <p>Select available target inventory. The original room will be freed to AVAILABLE, and the invoice will recalculate immediately.</p>
+          
+          <div class="form-group mt-3">
+            <label for="upgradeRoomSelect">Available Upgrade Rooms:</label>
+            <select id="upgradeRoomSelect" class="form-control">
+              <option value="room-401" data-price="10000" data-diff="4000">
+                Room 401 — Presidential Suite (₹10,000/night &bull; +₹4,000/night)
+              </option>
+            </select>
+          </div>
+          <div class="alert-box alert-info mt-2">
+            Upgrade differential: <strong>+₹12,000</strong> (3 nights × ₹4,000 difference).
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" id="btnCancelUpgrade">Cancel</button>
+          <button class="btn btn-primary" id="btnConfirmUpgrade">Confirm Upgrade</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 StayEase Hotel Management System. Built for Mini-Project Demonstration (Units 1–5).</p>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/dom.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

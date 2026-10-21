@@ -36,6 +36,7 @@ module.exports = {
   // Payment Status Enums (Section 16)
   PAYMENT_STATUS: {
     PENDING: 'PENDING',
+    PAID: 'PAID',
     SUCCESS: 'SUCCESS',
     FAILED: 'FAILED',
     REFUNDED: 'REFUNDED'

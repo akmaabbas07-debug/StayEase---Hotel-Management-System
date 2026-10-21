@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ==========================================================================
+     STAYEASE HOTEL MANAGEMENT SYSTEM
+     Module: Apache Tomcat Deployment Descriptor
+     Primary Owner: Akul Agarwal (25070122030) - DevOps & Supporting Services Lead
+     Course Unit Mapping: Unit 5 (Apache Tomcat Deployment & Java Servlets)
+     ========================================================================== -->
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <display-name>StayEase Hotel Management - Apache Tomcat Component</display-name>
+    <description>
+        Demonstration Java Servlet component created to satisfy the Unit 5 Apache Tomcat requirement.
+        Note: The primary full-stack StayEase system runs on Node.js/Express and MongoDB.
+    </description>
+
+    <servlet>
+        <servlet-name>StayEaseServlet</servlet-name>
+        <servlet-class>com.stayease.hotel.StayEaseServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StayEaseServlet</servlet-name>
+        <url-pattern>/status</url-pattern>
+    </servlet-mapping>
+
+</web-app>

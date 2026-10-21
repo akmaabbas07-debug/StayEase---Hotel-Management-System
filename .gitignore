@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables & credentials
+.env
+.env.local
+
+# Logs
+backend/logs/*.log
+!backend/logs/.gitkeep
+
+# Receipts & Uploads generated files
+backend/receipts/REC-*.txt
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Jenkins & Tomcat artifacts
+*.war
+target/
+.project
+.settings/

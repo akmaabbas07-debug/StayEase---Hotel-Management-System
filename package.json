@@ -1,0 +1,33 @@
+{
+  "name": "stayease-hotel-management",
+  "version": "1.0.0",
+  "description": "StayEase - Hotel Management, Check-in, Services & Billing System (Units 1-5 Mini-Project)",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js",
+    "test": "node --test tests/unit/*.test.js tests/integration/*.test.js",
+    "seed": "node backend/config/seed.js",
+    "lint": "node -e \"console.log('Validating project syntax...');\""
+  },
+  "keywords": [
+    "hotel-management",
+    "check-in",
+    "billing",
+    "vouchers",
+    "mongodb",
+    "nodejs",
+    "jenkins",
+    "tomcat"
+  ],
+  "author": "StayEase Team (Akmal Abbas, Adarsh Bimal, Ahasas Singh, Akul Agarwal)",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.16"
+  },
+  "devDependencies": {}
+}
